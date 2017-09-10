@@ -1,6 +1,6 @@
 // -- imports == //
-const HttpServer = require('./server');
-const SocketServer = require('./socket');
+const HttpServer = require('./http-server');
+const SocketServer = require('./socket-server');
 const SerialReceiver = require('./serial-receiver');
 const SlackMessenger = require('./slack-messenger');
 const Utils = require('./utils');
@@ -16,8 +16,8 @@ if (!portName) {
   process.exit();
 }
 
-var httpServer = HttpServer.init();
-var socketServer = SocketServer.init(httpServer);
+var httpServer = HttpServer.create();
+var socketServer = SocketServer.create(httpServer);
 var serialReceiver = new SerialReceiver(portName, socketServer);
 
 serialReceiver.on('message', (message) => sendToSocket(message));

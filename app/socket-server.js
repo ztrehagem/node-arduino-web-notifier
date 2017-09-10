@@ -4,7 +4,7 @@ const Utils = require('./utils');
 
 
 // -- exports -- //
-exports.init = init;
+exports.create = create;
 
 
 // -- functions -- //
@@ -15,7 +15,7 @@ function initSocket(server, socket) {
   });
 }
 
-function init(httpServer) {
+function create(httpServer) {
   var socketServer = SocketIO(httpServer);
   socketServer.on('connection', (socket) => initSocket(socketServer, socket));
   return socketServer;

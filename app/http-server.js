@@ -6,7 +6,7 @@ const Utils = require('./utils');
 
 
 // -- exports -- //
-exports.init = init;
+exports.create = create;
 
 
 // -- functions -- //
@@ -34,7 +34,7 @@ function onRequest(request, response) {
   request.on('end', () => deliverFile(request, response));
 }
 
-function init() {
+function create() {
   var server = Http.createServer();
   server.on('request', (request, response) => onRequest(request, response));
   return server;
