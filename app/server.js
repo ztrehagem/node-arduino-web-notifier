@@ -6,13 +6,13 @@ const Utils = require('./utils');
 
 
 // -- exports -- //
-exports.createServer = createServer;
+exports.init = init;
 
 
 // -- functions -- //
 async function deliverFile(request, response) {
   var filename = request.url + (request.url.endsWith('/') ? 'index.html' : '');
-  var filepath = Path.join(__dirname, 'public', filename);
+  var filepath = Path.join(__dirname, '../public', filename);
   var file = await Utils.getFile(filepath);
 
   if (!file) {
@@ -34,6 +34,8 @@ function onRequest(request, response) {
   request.on('end', () => deliverFile(request, response));
 }
 
-function createServer() {
-  return Http.createServer((request, response) => onRequest(request, response));
+function init() {
+  var server = Http.createServer();
+  server.on('request', (request, response) => onRequest(request, response));
+  return server;
 }

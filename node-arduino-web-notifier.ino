@@ -4,5 +4,5 @@ void setup() {
 
 void loop() {
   Serial.write("ABC", 3);
-  delay(1000);
+  delay(5000);
 }
