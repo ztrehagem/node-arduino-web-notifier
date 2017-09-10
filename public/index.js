@@ -12,4 +12,5 @@ window.addEventListener('load', () => {
   // socket.emit('first', (data) => {
   //   console.log(data);
   // });
+  socket.on('greeting', (data) => console.log(data))
 });

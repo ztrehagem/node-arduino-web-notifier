@@ -1,35 +1,39 @@
-const http = require('http');
-const nodeStatic = require('node-static');
-const socketIo = require('socket.io');
+// -- imports -- //
+const Http = require('http');
+const Path = require('path');
 const HttpStatus = require('http-status');
+const Utils = require('./utils');
 
-const server = http.createServer((req, resp) => {
-  // staticServer.serve(req, resp, (err, res) => {
-  //   if (!err) return;
-  //
-  //   if (!resp.finished) {
-  //     resp.writeHead(HttpStatus.INTERNAL_SERVER_ERROR);
-  //     resp.end();
-  //   }
-  // });
-  console.log('requested', req.url);
-  req.on('end', () => {
-    resp.writeHead(HttpStatus.NOT_FOUND, {
-      'Content-Type': 'text/plain',
-    });
-    resp.end('hoge');
-  });
-});
-const staticServer = new nodeStatic.Server('./public');
-// const socketServer = socketIo(server);
 
-// socketServer.on('connection', (socket) => {
-//   console.log('connected');
-//   // console.log('greeting!');
-//   // socket.emit('greeting', 'hello!');
-//   // socket.on('first', (data, cb) => {
-//   //   cb('hello from server');
-//   // });
-// });
+// -- exports -- //
+exports.createServer = createServer;
 
-module.exports = server;
+
+// -- functions -- //
+async function deliverFile(request, response) {
+  var filename = request.url + (request.url.endsWith('/') ? 'index.html' : '');
+  var filepath = Path.join(__dirname, 'public', filename);
+  var file = await Utils.getFile(filepath);
+
+  if (!file) {
+    response.writeHead(HttpStatus.NOT_FOUND);
+    response.end();
+    Utils.log('not found >>', filename);
+  } else {
+    response.writeHead(HttpStatus.OK);
+    response.write(file);
+    response.end();
+    Utils.log('delivered >>', filename)
+  }
+}
+
+function onRequest(request, response) {
+  Utils.log('requested url >>', request.url);
+
+  request.on('data', (chunk) => Utils.log('received chunk >>', chunk.toString()));
+  request.on('end', () => deliverFile(request, response));
+}
+
+function createServer() {
+  return Http.createServer((request, response) => onRequest(request, response));
+}
