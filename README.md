@@ -9,3 +9,7 @@ node-arduino-web-notifier
   - You can find the device name on ArduinoIDE
 - Input command to terminal like: `npm run start <portname>` like: `npm run start /dev/cu.usbmodem14431`
 - Open URL `http://localhost:8080`. You can use any web browser.
+
+# Slack Notification
+- Add new incoming WebHook integration to your slack team.
+- Run command with WebHook URL like: `npm run start <portname> https://hook.slack.com/...`
