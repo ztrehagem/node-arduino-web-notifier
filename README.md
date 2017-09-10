@@ -1,9 +1,13 @@
 node-arduino-web-notifier
 ==
 
-# Testing
+# Setup
 - Install "Node.js" to your PC from [here](https://nodejs.org/)
 - Download or clone this repository to your PC.
+- Exec command `npm install` at project root
+
+
+# Testing
 - Open `node-arduino-web-notifier.ino` and write to your Arduino.
 - Get the name of the USB port that is connected to your Arduino (like "/dev/cu.usbmodem14431")
   - You can find the device name on ArduinoIDE
