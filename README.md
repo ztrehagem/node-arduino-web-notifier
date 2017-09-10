@@ -2,7 +2,7 @@ node-arduino-web-notifier
 ==
 
 # Setup
-- Install "Node.js" to your PC from [here](https://nodejs.org/)
+- Install "Node.js" **>= v8** to your PC from [here](https://nodejs.org/)
 - Download or clone this repository to your PC.
 - Exec command `npm install` at project root
 
